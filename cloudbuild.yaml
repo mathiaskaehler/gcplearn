@@ -1,5 +1,5 @@
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'billing', 'budgte', 'create', '--project=your-project-id', '--name=monthly-budget', '--amount=500', '--currency=EUR', '--notifications', '--thresholds=0:50:90']
+  args: ['beta', 'billing', 'budged', 'create', '--project=your-project-id', '--name=monthly-budget', '--amount=500', '--currency=EUR', '--notifications', '--thresholds=0:50:90']
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['beta', 'compute', 'region-backend-services', 'create', 'your-backend-service', '--region=europe-west3', '--network=your-network', '--global']
