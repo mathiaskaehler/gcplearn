@@ -1,5 +1,25 @@
-steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'billing', 'budgets', 'create', '--project=your-project-id', '--name=monthly-budget', '--amount=500', '--currency=EUR', '--notifications', '--thresholds=0:50:90']
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'compute', 'region-backend-services', 'create', 'your-backend-service', '--region=europe-west3', '--network=your-network', '--global']
+imports:
+- path: google/compute/cloudbuild.yaml
+
+resources:
+- type: google_compute_instance.vm
+  name: vm-instance
+  properties:
+    zone: europe-west3-a
+    machine_type: n1-nano
+    boot_disk:
+      initialize_params:
+        image: debian-11-buster-v20210325
+        size: 10GB
+    disks:
+    - device_name: persistent-disk
+      type: pd-standard
+      mode: READ_WRITE
+      auto_delete: true
+      boot: false
+      initialize_params:
+        source_image: debian-11-buster-v20210325
+        size: 100GB
+    network_interfaces:
+    - network: global/networks/default
+      access_configs: []
