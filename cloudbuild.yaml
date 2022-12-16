@@ -1,4 +1,5 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['compute', 'instances', 'create', 'vm-name', '--project', 'extreme-zephyr-318408', '--zone', 'europe-west3-b', '--machine-type', 'n1-nano', '--image-family', 'debian-11', '--image-project', 'debian-cloud', '--boot-disk-size', '10GB', '--boot-disk-type', 'pd-standard', '--disk', 'name=persistent-disk,device-name=persistent-disk,mode=rw,size=100GB', '--no-address']
-
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['compute', 'instances', 'create', 'n1-nano-vm', '--image-family', 'debian-11', '--image-project', 'debian-cloud', '--zone', 'europe-west3-c', '--boot-disk-size', '10GB', '--create-disk', 'mode=rw,size=100GB', '--no-address']
+  env:
+    PROJECT_ID: '	extreme-zephyr-318408'
