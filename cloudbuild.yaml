@@ -1,25 +1,6 @@
-imports:
-- path: google/compute/cloudbuild.yaml
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['compute', 'instances', 'create', 'vm-name', '--project', '$PROJECT_ID', '--zone', 'europe-west3-b', '--machine-type', 'n1-nano', '--image-family', 'debian-11', '--image-project', 'debian-cloud', '--boot-disk-size', '10GB', '--boot-disk-type', 'pd-standard', '--disk', 'name=persistent-disk,device-name=persistent-disk,mode=rw,size=100GB', '--no-address']
 
-resources:
-- type: google_compute_instance.vm
-  name: vm-instance
-  properties:
-    zone: europe-west3-a
-    machine_type: n1-nano
-    boot_disk:
-      initialize_params:
-        image: debian-11-buster-v20210325
-        size: 10GB
-    disks:
-    - device_name: persistent-disk
-      type: pd-standard
-      mode: READ_WRITE
-      auto_delete: true
-      boot: false
-      initialize_params:
-        source_image: debian-11-buster-v20210325
-        size: 100GB
-    network_interfaces:
-    - network: global/networks/default
-      access_configs: []
+substitutions:
+  PROJECT_ID: 'extreme-zephyr-318408'
