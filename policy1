@@ -1,0 +1,33 @@
+resource "google_project_iam_policy" "project_policy" {
+  project = extreme-zephyr-318408
+
+  binding {
+    role    = "roles/billing.user"
+    members = ["user:mathias.kaehler@gmail.com"]
+  }
+
+  binding {
+    role    = "roles/compute.admin"
+    members = ["user:mathias.kaehler@gmail.com"]
+  }
+
+  binding {
+    role    = "roles/resourcemanager.folderAdmin"
+    members = ["user:mathias.kaehler@gmail.com"]
+  }
+
+  binding {
+    role    = "roles/serviceusage.serviceUsageAdmin"
+    members = ["user:mathias.kaehler@gmail.com"]
+  }
+
+  constraint {
+    constraint = "constraints/compute.region"
+    expression = "region == 'europe-west3'"
+  }
+
+  constraint {
+    constraint = "constraints/billing.maxMonthlyAmount"
+    expression = "maxAmount == 500"
+  }
+}
