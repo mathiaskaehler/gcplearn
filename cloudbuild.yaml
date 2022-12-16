@@ -1,5 +1,33 @@
-steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['compute', 'instances', 'create', 'n1-nano-vm', '--image-family', 'debian-11', '--image-project', 'debian-cloud', '--zone', 'europe-west3-c', '--boot-disk-size', '10GB', '--create-disk', 'mode=rw,size=100GB', '--no-address']
-  env:
-    PROJECT_ID: 'extreme-zephyr-318408'
+# Import placeholder for project name
+- name: "gcp-project-id"
+  value: "extreme-zephyr-318408"
+
+# Create VM
+- name: "gcp-compute"
+  type: "create"
+  resource: "compute.v1.instance"
+  properties:
+    machineType: "zones/europe-west3-c/machineTypes/n1-nano"
+    disks:
+    - boot: true
+      initializeParams:
+        sourceImage: "projects/debian-cloud/global/images/family/debian-11"
+        diskType: "pd-standard"
+        diskSizeGb: "10"
+    - initializeParams:
+        diskType: "pd-standard"
+        diskSizeGb: "100"
+    metadata:
+      items:
+      - key: "startup-script"
+        value: |
+          #!/bin/bash
+          apt-get update
+          apt-get install -y apache2
+    networkInterfaces:
+    - network: "global/networks/default"
+      accessConfigs: []
+    tags:
+      items:
+      - "http-server"
+    zone: "europe-west3-c"
