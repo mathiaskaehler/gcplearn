@@ -1,9 +1,7 @@
 # Set project ID
-PROJECT_ID=extreme-zephyr-318408
-
 # Create Compute Engine instance
 gcloud compute instances create vm-instance \
-  --project=$PROJECT_ID \
+  --project=extreme-zephyr-318408 \
   --zone=europe-west3-c \
   --machine-type=n1-nano \
   --image-family=debian-11 \
